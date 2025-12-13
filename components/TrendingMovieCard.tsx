@@ -3,6 +3,7 @@ import React from 'react'
 import { Link } from 'expo-router';
 import { images } from '@/constants/images';
 import MaskedView from '@react-native-masked-view/masked-view';
+import { icons } from '@/constants/icons';
 
 type TrendingCardProps = {  
     movie: {
@@ -35,14 +36,15 @@ const TrendingMovieCard = ({movie:{title,poster_url,movie_id},index}:TrendingCar
                 }
               >
                 <Image
-                  source={images.highlight}
-                  className=' size-14'
+                  source={images.rankingGradient}
+                  className='size-14 h-20'
                   resizeMode='cover'
                 />
               </MaskedView>
             </View>
-    
-    
+            <Text className=" text-sm mt-2 font-bold text-light-200" numberOfLines={2}>
+              {title}
+            </Text>
         
           </TouchableOpacity>
         </Link>
