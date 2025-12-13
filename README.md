@@ -1,4 +1,4 @@
-About Streaming Movies App
+About STREAM
 =============================
 This is a React Native application built with Expo and NativeWind/Tailwind CSS. The app allows users to browse and search for streaming movies. It features a tab-based navigation system, a search bar, and displays a list of the latest movies as well as trending movies.
 Features
