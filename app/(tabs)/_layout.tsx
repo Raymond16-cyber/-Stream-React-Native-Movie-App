@@ -1,35 +1,98 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+// this file removes the defualt header that hs the file's name on them
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { icons } from "@/constants/icons";
+import { Tabs } from "expo-router";
+import React from "react";
+import { Image, Text, View } from "react-native";
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+type Props = {
+  icon: any;
+  name: string;
+  focused: boolean;
+};
 
+const TabIcon = ({ icon, name, focused }: Props) => {
+  return focused ? (
+    <View className="flex flex-row w-full flex-1 min-w-[112px] min-h-16
+ mt-4 justify-center items-center bg-accent rounded-full overflow-hidden">
+      <Image source={icon} className="size-7" />
+      <Text className="text-secondary text-base font-semibold">{name}</Text>
+    </View>
+  ) : (
+    <View className="flex size-full justify-center items-center mt-4 rounded-full ">
+      <Image source={icon} className="size-8" tintColor="#A8B5DB" />
+    </View>
+  );
+};
+
+const _layout = () => {
   return (
     <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
+    screenOptions={{
+        tabBarShowLabel:false,
+        tabBarItemStyle:{
+            width:"100%",
+            height:"100%",
+            justifyContent:"center",
+            alignItems:"center"
+            
+        },
+        tabBarStyle:{
+            backgroundColor: "#0f0d23",
+            borderRadius: 50,
+            marginHorizontal:20,
+            marginBottom:36,
+            height:53,
+            position:"absolute",
+            overflow:"hidden",
+            borderWidth:1,
+            borderColor:"#0f0d23"
+
+
+        }
+    }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          headerShown: false,
+          title: "Home",
+          tabBarIcon: ({ focused }) => (
+            <TabIcon icon={icons.home} name="Home" focused={focused} />
+          ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="search"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          headerShown: false,
+          title: "Search",
+          tabBarIcon: ({ focused }) => (
+            <TabIcon icon={icons.search} name="Search" focused={focused} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="saved"
+        options={{
+          headerShown: false,
+          title: "Saved",
+          tabBarIcon: ({ focused }) => (
+            <TabIcon icon={icons.save} name="Saved" focused={focused} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          headerShown: false,
+          title: "Profile",
+          tabBarIcon: ({ focused }) => (
+            <TabIcon icon={icons.person} name="Account" focused={focused} />
+          ),
         }}
       />
     </Tabs>
   );
-}
+};
+
+export default _layout;
