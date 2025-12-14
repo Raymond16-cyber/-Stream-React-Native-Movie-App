@@ -76,7 +76,7 @@ export const getTrendingMovies = async(): Promise<TrendingMovie[] | undefined>=>
       databaseId: APPWRITE_DATABASE_ID!,
       tableId: APPWRITE_TABLE_ID,
       queries: [
-        Query.limit(5),
+        Query.limit(8),
         Query.orderDesc("count")
         // this can be used on integered fields specified in Query.orderDesc() to get them in descending order and  Query.limit(5) only picks the first FIVE
     ],

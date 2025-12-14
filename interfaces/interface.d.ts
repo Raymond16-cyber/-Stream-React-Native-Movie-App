@@ -29,5 +29,19 @@ interface MovieDetails {
     belongs_to_collection: {
         
     }
-    
+    title : string,
+    genres : {id:number, name:string},
+    overview : string,
+    poster_path : string,
+    release_date : string,
+    runtime : number,
+    vote_average : number,
+    vote_count : number,
+    budget : number,
+    revenue : number,
+    original_language : string,
+    homepage : string,
+    status : string,
+    tagline : string,
+    production_companies : {id:number, logo_path:string, name:string, origin_country:string}[]
 }

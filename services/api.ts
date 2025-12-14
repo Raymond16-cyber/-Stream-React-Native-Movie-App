@@ -38,3 +38,26 @@ export const fetchMovies = async ({ query }: { query: string }) => {
   const data = await response.json();
   return data.results;
 };
+
+
+export const fetchmovieDetails = async (movie_id: string):Promise<MovieDetails> => {
+  try {
+    const response = await fetch(`${TMDB_CONFIG.BASE_URL}/movie/${movie_id}?api_key=${TMDB_CONFIG.API_KEY}`, {
+      method: "GET",
+      headers: TMDB_CONFIG.headers,
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(
+        `TMDB Error ${errorData.status_code}: ${errorData.status_message}`
+      );
+    }
+    const data = await response.json();
+    console.log("Movie genre clicked:", data.genres[1].name);
+    return data;
+  } catch (error) {
+    console.log("Error fetching movie details:", error);
+    throw error;
+    
+  }
+}
