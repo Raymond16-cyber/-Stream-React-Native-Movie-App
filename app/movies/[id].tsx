@@ -1,10 +1,18 @@
 import { icons } from "@/constants/icons";
 import { fetchmovieDetails } from "@/services/api";
+import { saveMovieInfo } from "@/services/appwrite";
 import { useFetch } from "@/services/useFetch";
+import AntDesign from "@expo/vector-icons/AntDesign";
 import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import AntDesign from '@expo/vector-icons/AntDesign';
+import {
+  Image,
+  Pressable,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 const MovieInfo = ({ label, value }: { label: string; value: string }) => (
   <View className=" flex-col items-start justify-center mt-5">
@@ -24,6 +32,14 @@ export default function MovieDetails() {
   } = useFetch(() => fetchmovieDetails(id as string));
 
   const [expandText, setExpandText] = useState(false);
+  const [movieSaved, setMovieSaved] = useState(false);
+
+  const saveMovie = async (movie: MovieDetails | null) => {
+    if (!movie) return;
+    console.log("saving movie: ", movie.title, movie.genres[0].name);
+    const result = await saveMovieInfo(movie);
+    setMovieSaved(result ?? false);
+  };
 
   return (
     <View className="bg-primary flex-1">
@@ -59,16 +75,33 @@ export default function MovieDetails() {
             </Text>
           </View>
 
-          {/* rating */}
-          <View className=" bg-dark-100 px-2 py-1 rounded-md  mt-2 flex-row items-center justify-center">
-            <Image source={icons.star} className=" size-4 w-10 h-10" />
-            <Text className=" text-light-200 text-sm">
-              {Math.round(movie?.vote_average || 0)}/10
-            </Text>
-            <Text className=" text-light-200 text-sm">
-              {" "}
-              ({movie?.vote_count} votes)
-            </Text>
+          {/* rating X save film */}
+          <View className="flex flex-row items-center justify-between w-full">
+            <View className=" bg-dark-100 px-2 py-1 rounded-md mt-2 flex-row items-center justify-center">
+              <Image source={icons.star} className=" size-4 w-10 h-10" />
+              <Text className=" text-light-200 text-sm">
+                {Math.round(movie?.vote_average || 0)}/10
+              </Text>
+              <Text className=" text-light-200 text-sm">
+                {" "}
+                ({movie?.vote_count} votes)
+              </Text>
+            </View>
+
+            <Pressable
+              className="flex flex-col items-center"
+              onPress={() => saveMovie(movie)}
+              disabled={movieSaved}
+            >
+              <AntDesign
+                name={movieSaved ? "check" : "plus"}
+                size={24}
+                color="white"
+              />
+              <Text className=" text-white" style={{ fontSize: 8 }}>
+                {movieSaved ? "Saved" : "Save"}
+              </Text>
+            </Pressable>
           </View>
 
           {/* movie overview */}
@@ -128,13 +161,15 @@ export default function MovieDetails() {
 
       {/* Go back button */}
       <TouchableOpacity
-      className="absolute bottom-5 left-0 right-0 mx-5 bg-accent rounded-lg py-3.5 flex flex-row items-center justify-center z-50"
+        className="absolute bottom-5 left-0 right-0 mx-5 bg-accent rounded-lg py-3.5 flex flex-row items-center justify-center z-50"
         onPress={() => {
           router.back();
         }}
       >
-       <AntDesign name="arrow-left" size={22} color="white" />
-        <Text className=" text-white font-semibold text-base ml-2">Go Back</Text>
+        <AntDesign name="arrow-left" size={22} color="white" />
+        <Text className=" text-white font-semibold text-base ml-2">
+          Go Back
+        </Text>
       </TouchableOpacity>
     </View>
   );

@@ -61,3 +61,4 @@ export const fetchmovieDetails = async (movie_id: string):Promise<MovieDetails> 
     
   }
 }
+

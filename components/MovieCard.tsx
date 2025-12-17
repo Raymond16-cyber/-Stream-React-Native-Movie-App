@@ -9,15 +9,17 @@ type Props = {
 };
 
 const MovieCard = ({ item, onPress }: Props) => {
-    if (!item) return null; // ✅ hard guard
+  if (!item) {
+    console.log("movie not found");
+    return null;
+  } // ✅ hard guard
 
   const { id, title, poster_path, vote_average, release_date } = item;
-
 
   return (
     <Link
       href={`/movies/${id}`}
-      onPress={onPress}   // ✅ side-effect lives HERE
+      onPress={onPress} // ✅ side-effect lives HERE
       asChild
     >
       <TouchableOpacity className="w-[30%]">

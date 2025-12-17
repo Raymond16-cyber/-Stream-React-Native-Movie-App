@@ -24,15 +24,17 @@ interface TrendingMovie {
 }
 
 interface MovieDetails {
+    movie_id: number,
+    movie_title: string,
+    id:number,
     adult : boolean,
     backdrop_path : string,
     belongs_to_collection: {
         
     }
     title : string,
-    genres : {id:number, name:string},
+    genres : [{id:number, name:string}],
     overview : string,
-    poster_path : string,
     release_date : string,
     runtime : number,
     vote_average : number,
@@ -41,7 +43,21 @@ interface MovieDetails {
     revenue : number,
     original_language : string,
     homepage : string,
+    poster_path : string,
     status : string,
     tagline : string,
-    production_companies : {id:number, logo_path:string, name:string, origin_country:string}[]
+    production_companies : {id:number, logo_path:string, name:string, origin_country:string}[],
+    genre_ids : number[],
+    original_languages : string,
+    original_title : string,
+    popularity : number,
+    video : boolean
+}
+
+interface SavedMovie {
+    movie_id: number,
+    movie_title: string,
+    genres : [],
+    poster_path : string,
+    
 }
